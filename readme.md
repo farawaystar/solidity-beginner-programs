@@ -6,7 +6,10 @@ Use online IDE - https://remix.ethereum.org/
 Environment - Remix VM (Cancum)
 
 go to the above IDE and select the Remix VM (Cancum) environment --> create a file called MyContract.sol --> paste one of these programs --> click deploy
-and see the results
+and see the results.
+
+Once you have executed a program, just delete it from Deployed Contracts sections in the IDE, and paste the next program and run it. Do the same for all programs.
+Note: Each program has a pragma statement in the beginning. It just specifies the latest availabe compiler. In the IDE go to compiler section and see which one is the latest, and use that if you like.
 
 ## 1. Hello World Smart Contract
 
@@ -42,6 +45,8 @@ A basic smart contract that demonstrates how to store and retrieve data on the b
 
 ```solidity
 //2. Hello World Contract with simple storage variable
+pragma solidity 0.8.29;
+
 contract MyContract {
     uint public data;
     function set(uint _data) external {
@@ -76,6 +81,8 @@ A simple counter contract that allows incrementing and decrementing a value stor
 
 ```solidity
 //3. Counter
+pragma solidity 0.8.29;
+
 contract MyContract {
     uint public count;
     
@@ -119,6 +126,8 @@ A contract that locks funds for a specified period before allowing withdrawal by
 
 ```solidity
 //4. Timelock
+pragma solidity 0.8.29;
+
 contract MyContract {
     uint public unclockTime;
     address public owner;
@@ -164,6 +173,8 @@ A wallet contract that automatically makes a 1% donation to a beneficiary whenev
 
 ```solidity
 //5. Wallet + donation. It will hold money, each time u send money, it will make a small donation
+pragma solidity 0.8.29;
+
 contract MyContract {
     address public owner;
     address public beneficiary;
@@ -235,6 +246,8 @@ A domain name registry that allows users to register names on the blockchain by 
 //instead of sending payments to long addresses, one can send to following as example
 //farawaystar.eth
 //app.ens.domains - also provides similar service
+pragma solidity 0.8.29;
+
 contract MyContract {
 // define a container of objects
     mapping(string => address) public names;
@@ -277,6 +290,8 @@ A contract that implements a simple crowdfunding campaign with a funding goal an
 
 ```solidity
 //7. Crowdfunding contract
+pragma solidity 0.8.29;
+
 contract MyContract {
     address public owner;
     uint public goal;
