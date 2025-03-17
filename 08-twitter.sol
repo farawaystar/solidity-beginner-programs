@@ -9,14 +9,24 @@ pragma solidity ^0.8.0;
 // 5️⃣ Add array of tweets 
 
 contract Twitter {
+address owner;
 mapping(address => Tweet[] ) public tweets;
-uint16 constant MAX_TWEET_LENGTH = 280;
+uint16 public MAX_TWEET_LENGTH = 280;
 
 struct Tweet {
 	address author;
 	uint256 timestamp;
 	string content;
 	uint256 likes;
+}
+
+constructor(){
+    owner = msg.sender;
+}
+
+modifier onlyOwner {
+    require(msg.sender == owner, "You are not authorized");
+    _;
 }
 
 function createTweet(string memory _tweet) public {
@@ -38,4 +48,8 @@ function getTweet(uint _i) public view returns (Tweet memory) {
 function getAllTweets() public view returns (Tweet[] memory){
 	return tweets[msg.sender];
 	}
+
+function changeTweetLength(uint16 newMaxTweetLength) public onlyOwner{
+    MAX_TWEET_LENGTH = newMaxTweetLength;
+    }
 }
