@@ -6,7 +6,30 @@ pragma solidity ^0.8.0;
 // 2️⃣ Create a mapping between user and tweet 
 // 3️⃣ Add function to create a tweet and save it in mapping
 // 4️⃣ Create a function to get Tweet 
-// 5️⃣ Add array of tweets 
+// 5️⃣ Add array of tweets
+// -------------------15-------------------
+// 1️⃣ Define a Tweet Struct with author, content, timestamp, likes
+// 2️⃣ Add the struct to array
+// 3️⃣ Test Tweets
+// -------------------15-------------------
+// 1️⃣  Use require to limit the length of the tweet to be only 280 characters
+// HINT: use bytes to length of tweet
+// -------------------17-------------------
+// 1️⃣ Add a function called changeTweetLength to change max tweet length
+// HINT: use newTweetLength as input for function
+// 2️⃣ Create a constructor function to set an owner of contract
+// 3️⃣ Create a modifier called onlyOwner
+// 4️⃣ Use onlyOwner on the changeTweetLength function
+// -------------------18-------------------
+// 1️⃣ Add id to Tweet Struct to make every Tweet Unique
+// 2️⃣ Set the id to be the Tweet[] length 
+// HINT: you do it in the createTweet function
+// 3️⃣ Add a function to like the tweet
+// HINT: there should be 2 parameters, id and author
+// 4️⃣ Add a function to unlike the tweet
+// HINT: make sure you can unlike only if likes count is greater then 0
+// 4️⃣ Mark both functions external
+// --------------------------------------
 
 contract Twitter {
 address owner;
@@ -15,6 +38,7 @@ uint16 public MAX_TWEET_LENGTH = 280;
 
 struct Tweet {
 	address author;
+    uint256 id;
 	uint256 timestamp;
 	string content;
 	uint256 likes;
@@ -35,7 +59,8 @@ function createTweet(string memory _tweet) public {
 		author: msg.sender,
 		timestamp: block.timestamp,
 		content: _tweet,
-		likes: 0
+		likes: 0,
+        id: tweets[msg.sender].length // use the length of the tweet to)
 	});
 
 	tweets[msg.sender].push(newTweet);
@@ -51,5 +76,16 @@ function getAllTweets() public view returns (Tweet[] memory){
 
 function changeTweetLength(uint16 newMaxTweetLength) public onlyOwner{
     MAX_TWEET_LENGTH = newMaxTweetLength;
+    }
+
+function likeTweet(address author, uint256 id) external{
+    require(tweets[author][id].id == id, "Tweet doesnt exist");
+    tweets[author][id].likes++;
+    }
+
+function unlikeTweet(address author, uint256 id) external{
+    require(tweets[author][id].id == id, "Tweet doesnt exist");
+    require(tweets[author][id].likes > 0, "Tweet has no likes");
+    tweets[author][id].likes--;
     }
 }
