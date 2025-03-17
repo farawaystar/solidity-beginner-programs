@@ -9,17 +9,31 @@ pragma solidity ^0.8.0;
 // 5️⃣ Add array of tweets 
 
 contract Twitter {
-mapping(address => string[] ) public tweets;
+mapping(address => Tweet[] ) public tweets;
+
+struct Tweet {
+	address author;
+	uint256 timestamp;
+	string content;
+	uint256 likes;
+}
 
 function createTweet(string memory _tweet) public {
-	tweets[msg.sender].push(_tweet);
-	}
+	Tweet memory newTweet = Tweet({
+		author: msg.sender,
+		timestamp: block.timestamp,
+		content: _tweet,
+		likes: 0
+	});
 
-function getTweet(address _owner, uint _i) public view returns (string memory) {
+	tweets[msg.sender].push(newTweet);
+}
+
+function getTweet(address _owner, uint _i) public view returns (Tweet memory) {
 	return tweets [_owner][_i];
 	}
 
-function getAllTweets(address _owner) public view returns (string[] memory){
+function getAllTweets(address _owner) public view returns (Tweet[] memory){
 	return tweets[_owner];
 	}
 }
