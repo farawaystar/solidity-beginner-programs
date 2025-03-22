@@ -18,7 +18,7 @@ Expense[] public Expenses;
 struct Expense {
     address user;
     string description;
-    uint256 amount;
+    uint amount;
 }
 
 
@@ -29,12 +29,12 @@ constructor() {
 }
 
 
-function addExpense(string memory _description, uint256 _amount) public{
+function addExpense(string memory _description, uint _amount) public{
 	Expenses.push(Expense(msg.sender, _description, _amount));
 	}
 
-function getTotalExpenses(address _user) public view returns (uint256) {
-	uint256 totalExpenses;
+function getTotalExpenses(address _user) public view returns (uint) {
+	uint totalExpenses;
 	for (uint i = 0; i < Expenses.length; i++) {
 		if (Expenses[i].user == _user){
 			totalExpenses += Expenses[i].amount;
@@ -44,4 +44,5 @@ function getTotalExpenses(address _user) public view returns (uint256) {
 	}
 
 }
+
 
