@@ -36,6 +36,12 @@ pragma solidity ^0.8.0;
 // 3️⃣ Create Events for liking & Unliking the tweet, called TweetLiked and TweetUnLiked ✅ 
 // USE parameters like liker/unLiker, tweetAuthor, tweetId, newLikeCount
 // 4️⃣ Emit the event in the likeTweet() & unLikeTweet functions respectively  ✅
+// --------------------24------------------
+// 1️⃣ Create a function, getTotalLikes, to get total Tweet Likes for the user
+// USE parameters of author
+// 2️⃣ Loop over all the tweets 
+// 3️⃣ Sum up totalLikes 
+// 4️⃣ Return totalLikes 
 
 contract Twitter {
 address public owner;
@@ -103,5 +109,13 @@ function unlikeTweet(address author, uint256 id) external{
     tweets[author][id].likes--;
 
     emit TweetUnLiked (msg.sender, author, id, tweets[author][id].likes);
+    }
+
+function getTotalLikes(address _author) external view returns (uint){
+    uint totalLikes;
+    for (uint i = 0; i < tweets[_author].length; i++){
+	    totalLikes += tweets[_author][i].likes;
+	    }
+	return totalLikes;
     }
 }
