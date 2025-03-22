@@ -38,15 +38,15 @@ pragma solidity ^0.8.0;
 // 4️⃣ Emit the event in the likeTweet() & unLikeTweet functions respectively  ✅
 
 contract Twitter {
-address owner;
+address public owner;
 mapping(address => Tweet[] ) public tweets;
 uint16 public MAX_TWEET_LENGTH = 280;
 
 struct Tweet {
-	address author;
     uint256 id;
+	address author;
+    string content;
 	uint256 timestamp;
-	string content;
 	uint256 likes;
 }
 
@@ -81,8 +81,8 @@ function getTweet(uint _i) public view returns (Tweet memory) {
 	return tweets [msg.sender][_i];
 	}
 
-function getAllTweets() public view returns (Tweet[] memory){
-	return tweets[msg.sender];
+function getAllTweets(address _owner) public view returns (Tweet[] memory){
+	return tweets[_owner];
 	}
 
 function changeTweetLength(uint16 newMaxTweetLength) public onlyOwner{
