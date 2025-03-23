@@ -42,9 +42,16 @@ pragma solidity ^0.8.0;
 // 2️⃣ Loop over all the tweets 
 // 3️⃣ Sum up totalLikes 
 // 4️⃣ Return totalLikes 
+// --------------------26------------------
+// 1️⃣ Import Ownable.sol contract from OpenZeppelin
+// 2️⃣ Inherit Ownable Contract
+// 3️⃣ Replace current onlyOwner 
 
-contract Twitter {
-address public owner;
+// import "openzeppelin-solidity/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract Twitter is Ownable{
+// address public owner;
 mapping(address => Tweet[] ) public tweets;
 uint16 public MAX_TWEET_LENGTH = 280;
 
@@ -56,6 +63,8 @@ struct Tweet {
 	uint256 likes;
 }
 
+constructor() Ownable(msg.sender) {}
+/*
 constructor(){
     owner = msg.sender;
 }
@@ -64,6 +73,7 @@ modifier onlyOwner {
     require(msg.sender == owner, "You are not authorized");
     _;
 }
+*/
 
 event TweetCreated (uint256 id, address author, string content, uint256 timestamp);
 event TweetLiked (address liker, address tweetAuthor, uint256 tweetid, uint256 newLikeCount);
